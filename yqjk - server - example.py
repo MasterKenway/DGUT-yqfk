@@ -56,52 +56,6 @@ def login(username, password):
 def submitform(target):
     time_fmt = time.strftime("%Y-%m-%d", time.localtime())
 
-    # 表单信息需要通过抓包获取较为稳妥，避免数据出错被辅导员查水表
-
-    form = {"submit_time": time_fmt,
-            "campus": 1,
-            "card_number": "",
-            "identity_type": 1,
-            "tel": "",
-            "connect_person": "",
-            "connect_tel": "",
-            "health_situation": 1,
-            "have_contact_hubei_people": 0,
-            "have_contact_illness_people": 0,
-            "recent_travel_situation": "无",
-            "remark": "无",
-            "family_situation": [0],
-            "is_specific_people": 1,
-            "have_diagnosis": "null",
-            "diagnosis_result": "null",
-            "processing_method": "null",
-            "have_gone_important_area": 0,
-            "important_area": "null",
-            "leave_important_area_time": "null",
-            "last_time_contact_hubei_people": "null",
-            "last_time_contact_illness_people": "null",
-            "have_isolation_in_dg": 0,
-            "end_isolation_time": "null",
-            "is_in_dg": 2,
-            "current_in_city": "null",
-            "current_region": ["142", "", "", ],
-            "plan_back_dg_time": "null",
-            "back_dg_transportation": "null",
-            "plan_details": "null",
-            "card_type": 49,
-            "huji_region": [],
-            "jiguan_region": [],
-            "family_region": [],
-            "family_address_detail": "",
-            "have_stay_area": 0,
-            "importantArr": ['false', 'false', 'false', 'false', 'false',
-                             'false', 'false', 'false', 'false', 'false',
-                             'false', 'false', 'false', 'false', 'false',
-                             'false', 'false', 'false', 'false', 'false',
-                             'false', 'false', 'false', 'false', 'false',
-                             'false', 'false', 'false'],
-            "familyArr": ["true", "false", "false", "false", "false"]}
-
     yqjk_session = requests.Session()
 
     yqjk_acesstoken = yqjk_session.get(url=target.replace('\\', ''))
@@ -121,13 +75,29 @@ def submitform(target):
 
     yqjk_session.get(url=yqjk_acesstoken.url)
 
-    result_json = yqjk_session.post(url="http://yqfk.dgut.edu.cn/home/base_info/addBaseInfo", headers=headers_2, json=form)
+    yqjk_info = yqjk_session.get('http://yqfk.dgut.edu.cn/home/base_info/getBaseInfo', headers=headers_2).json()
 
-    result = json.loads(result_json.text)
+    yqjk_json = yqjk_info['info']
 
-    
+    counter = 0
 
-    print(time.strftime("%Y-%m-%d-%H:%M:%S", time.localtime()) + result['message'])
+    result_save = yqjk_json
+
+    while True:
+        result = yqjk_session.post(url="http://yqfk.dgut.edu.cn/home/base_info/addBaseInfo", headers=headers_2,
+                                   json=yqjk_json).json()
+        counter += 1
+        if counter == 1:
+            result_save = result
+        if result['message'] == "今日已提交，请勿重复操作":
+            break
+
+    if counter == 1:
+        print(result_save)
+        print(time.strftime("%Y-%m-%d-%H:%M:%S", time.localtime()) + result_save['message'])
+    else:
+        print(result)
+        print(time.strftime("%Y-%m-%d-%H:%M:%S", time.localtime()) + result['message'])
 
     return result
 
