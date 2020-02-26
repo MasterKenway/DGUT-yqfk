@@ -110,6 +110,14 @@ headers_2 = {'Host': 'yqfk.dgut.edu.cn',
 
 yqjk_session.get(url=yqjk_acesstoken.url)
 
-result = yqjk_session.post(url="http://yqfk.dgut.edu.cn/home/base_info/addBaseInfo", headers=headers_2, json=form)
+result = yqjk_session.post(url="http://yqfk.dgut.edu.cn/home/base_info/addBaseInfo", headers=headers_2, json=form).json()
 
-print(result.json())
+counter = 0
+while result['message'] != "今日已提交，请勿重复操作":
+    result = yqjk_session.post(url="http://yqfk.dgut.edu.cn/home/base_info/addBaseInfo", headers=headers_2, json=form).json()
+    counter += 1
+
+if counter == 0:
+    print(result['message'])
+else:
+    print("已提交")
