@@ -121,10 +121,11 @@ def submitform(target):
 
     yqjk_session.get(url=yqjk_acesstoken.url)
 
-    result_json = yqjk_session.post(url="http://yqfk.dgut.edu.cn/home/base_info/addBaseInfo", headers=headers_2,
-                                    json=form)
+    result_json = yqjk_session.post(url="http://yqfk.dgut.edu.cn/home/base_info/addBaseInfo", headers=headers_2, json=form)
 
     result = json.loads(result_json.text)
+
+    
 
     print(time.strftime("%Y-%m-%d-%H:%M:%S", time.localtime()) + result['message'])
 
