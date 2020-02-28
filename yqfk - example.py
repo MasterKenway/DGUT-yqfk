@@ -69,9 +69,10 @@ yqfk_info = yqfk_session.get('http://yqfk.dgut.edu.cn/home/base_info/getBaseInfo
 
 yqfk_json = yqfk_info['info']
 
-print(yqfk_info['meesage'])
+print(yqfk_info['message'])
 
 result = yqfk_session.post(url="http://yqfk.dgut.edu.cn/home/base_info/addBaseInfo", headers=headers_2,
-                               json=yqfk_json)
+                               json=yqfk_json).json()
 
-print(result.content.decode())
+print(result['message'])
+
