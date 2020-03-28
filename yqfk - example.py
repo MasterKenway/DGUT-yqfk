@@ -66,12 +66,22 @@ headers_2 = {'Host': 'yqfk.dgut.edu.cn',
 yqfk_session.get(url=yqfk_acesstoken.url)
 
 yqfk_info = yqfk_session.get('http://yqfk.dgut.edu.cn/home/base_info/getBaseInfo', headers=headers_2).json()
-
 yqfk_json = yqfk_info['info']
+
+while yqfk_json is None:
+    print("获取失败，重新获取")
+    yqfk_info = yqfk_session.get('http://yqfk.dgut.edu.cn/home/base_info/getBaseInfo', headers=headers_2).json()
+    yqfk_json = yqfk_info['info']
+
 
 print(yqfk_info['message'])
 
 result = yqfk_session.post(url="http://yqfk.dgut.edu.cn/home/base_info/addBaseInfo", headers=headers_2,
+                               json=yqfk_json).json()
+
+while result is None:
+    print("提交失败，重新提交")
+    result = yqfk_session.post(url="http://yqfk.dgut.edu.cn/home/base_info/addBaseInfo", headers=headers_2,
                                json=yqfk_json).json()
 
 print(result['message'])
