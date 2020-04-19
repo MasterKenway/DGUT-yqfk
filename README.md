@@ -1,21 +1,20 @@
-# [DGUT-yqjk](https://github.com/MasterKenway/DGUT-yqjk)
+# [DGUT-yqfk](https://github.com/MasterKenway/DGUT-yqfk)
 
 
 
-在脚本中填写自己的中央认证相关信息
+在脚本的三个参数里面输入对应的值
 
-并且补充自己的个人信息（推荐通过Burp Suite抓包确认）
+```
+username = ""	#学号
+password = ""	#中央认证系统密码
+chat_id = "" 	#telegram用户ID（可选）
+bot_token = ""	#tgbot token
+```
 
-2020-2-25 更新服务器版本 
+默认时间在00:10的时候自动提交，可自行修改时间
 
-~~（后继可能会做docker image）~~
+定时运行使用了`apscheduler`
 
-2020-2-26 更新不再需要抓包获取表单内容（即设置账号密码后可以直接执行）
-
-~~紧急！：学校系统有bug 请勿使用脚本（作者已翻车）~~
-
-2020-2-28 经过测试 通过脚本提交成功后 会在一段时间内无法获取表单信息 实际上已经提交成功（似乎是学校系统bug）
-
-​				更新项目名称为DGUT-yqfk（原yqjk）
-
-​				server版本个人不打算用了 所以不再维护
+```
+pip install apscheduler
+```
