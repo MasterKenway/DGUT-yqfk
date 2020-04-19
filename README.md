@@ -18,3 +18,11 @@ bot_token = ""	#tgbot token
 ```
 pip install apscheduler
 ```
+
+可以使用`screen`将程序放置在后台运行
+
+```
+screen -S yqfk
+python3 yqfk.py #Ctrl + A + D 退出当前的screen
+```
+
