@@ -31,7 +31,7 @@ def get_page(message):
     print(login_info)
     if login_info == '登录错误':
         message.append(login_info)
-        return;
+        return
 
     pattern = re.compile(r"\"info\":\"(.*?)\"}$", re.MULTILINE | re.DOTALL)
     target = pattern.search(response_json).group(1)
