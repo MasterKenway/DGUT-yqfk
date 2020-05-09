@@ -14,4 +14,4 @@ RUN apk --no-cache add wget python unzip py-pip \
     && rm master.zip \
     && cd DGUT-yqfk-master \
 
-ENTRYPOINT ["python", "yqfk.py", "$USERNAME", "$PASSWORD", "$CHATID", "$BOTTOKN"]
+CMD ["python", "yqfk.py", "$USERNAME", "$PASSWORD", "$CHATID", "$BOTTOKN"]

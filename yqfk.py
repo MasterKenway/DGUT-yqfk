@@ -5,8 +5,6 @@ from apscheduler.schedulers.blocking import BlockingScheduler
 import re
 import requests
 import time
-import datetime
-import pytz
 import sys
 
 username = ""
@@ -33,7 +31,7 @@ def get_page(message):
     print(login_info)
     if login_info == '登录错误':
         message.append(login_info)
-        return
+        return;
 
     pattern = re.compile(r"\"info\":\"(.*?)\"}$", re.MULTILINE | re.DOTALL)
     target = pattern.search(response_json).group(1)
@@ -114,9 +112,9 @@ if __name__ == '__main__':
         chat_id = sys.argv[3]
         bot_token = sys.argv[4]
 
-    schedule = BlockingScheduler(pytz.timezone('Asia/Shanghai'))
+    schedule = BlockingScheduler()
     schedule.add_job(run, 'cron', hour=0, minute=10)
-    print('任务开始: ', datetime.datetime.utcnow())
-    # run()
-    # schedule.start()
+    print('任务开始: ' + time.strftime("%a, %d %b %Y %H:%M:%S", time.localtime()))
+    run()
+    schedule.start()
 
