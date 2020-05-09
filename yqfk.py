@@ -5,6 +5,9 @@ from apscheduler.schedulers.blocking import BlockingScheduler
 import re
 import requests
 import time
+import datetime
+import pytz
+import sys
 
 username = ""
 password = ""
@@ -30,7 +33,7 @@ def get_page(message):
     print(login_info)
     if login_info == '登录错误':
         message.append(login_info)
-        return;
+        return
 
     pattern = re.compile(r"\"info\":\"(.*?)\"}$", re.MULTILINE | re.DOTALL)
     target = pattern.search(response_json).group(1)
@@ -92,9 +95,28 @@ def run():
 
 
 if __name__ == '__main__':
-    schedule = BlockingScheduler()
+    if len(sys.argv) < 3 or len(sys.argv) > 5:
+        print("参数出错")
+        print(sys.argv[0], " <username> <password> [<ChatID> <BotToken>]")
+        exit(0)
+    elif len(sys.argv) == 3:
+        print("Username: ", sys.argv[1])
+        print("Password: ", sys.argv[2])
+        username = sys.argv[1]
+        password = sys.argv[2]
+    elif len(sys.argv) == 4:
+        print("Username: ", sys.argv[1])
+        print("Password: ", sys.argv[2])
+        print("ChatID: ", sys.argv[3])
+        print("TgBotToken: ", sys.argv[4])
+        username = sys.argv[1]
+        password = sys.argv[2]
+        chat_id = sys.argv[3]
+        bot_token = sys.argv[4]
+
+    schedule = BlockingScheduler(pytz.timezone('Asia/Shanghai'))
     schedule.add_job(run, 'cron', hour=0, minute=10)
-    print('任务开始: ' + time.strftime("%a, %d %b %Y %H:%M:%S", time.localtime()))
-    run()
-    schedule.start()
+    print('任务开始: ', datetime.datetime.utcnow())
+    # run()
+    # schedule.start()
 
