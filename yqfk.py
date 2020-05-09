@@ -117,6 +117,6 @@ if __name__ == '__main__':
     schedule = BlockingScheduler(pytz.timezone('Asia/Shanghai'))
     schedule.add_job(run, 'cron', hour=0, minute=10)
     print('任务开始: ', datetime.datetime.utcnow())
-    # run()
-    # schedule.start()
+    run()
+    schedule.start()
 
