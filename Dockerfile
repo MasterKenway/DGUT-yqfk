@@ -1,17 +1,26 @@
 FROM alpine
 
+LABEL maintainer="AUTUMN"
+
+WORKDIR /app
+
+ADD yqfk.py requirements.txt entrypoint.sh .
+
+RUN apk --no-cache add python3 \
+    && pip3 install --no-cache-dir -r requirements.txt \
+    && rm requirements.txt \
+    && chmod +x entrypoint.sh
+
+RUN apk add --no-cache tzdata && \
+    cp /usr/share/zoneinfo/Asia/Shanghai /etc/localtime && \
+    echo "Asia/Shanghai" > /etc/timezone && \
+    apk del tzdata && \
+    rm -rf /var/cache/apk/*
+
 ENV USERNAME=
 ENV PASSWORD=
-ENV CHATID=
-ENV BOTTOKN=
+ENV SCKYE=
 
-WORKDIR /yqfk
+ENV PYTHONUNBUFFERED=1
 
-RUN apk --no-cache add wget python unzip py-pip \
-    && pip install --no-cache-dir apscheduler \
-    && wget https://github.com/MasterKenway/DGUT-yqfk/archive/master.zip \
-    && unzip master.zip \
-    && rm master.zip \
-    && cd DGUT-yqfk-master \
-
-CMD ["python", "yqfk.py", "$USERNAME", "$PASSWORD", "$CHATID", "$BOTTOKN"]
+ENTRYPOINT ["/app/entrypoint.sh"]
