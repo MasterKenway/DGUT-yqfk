@@ -4,7 +4,7 @@ LABEL maintainer="AUTUMN"
 
 WORKDIR /app
 
-ADD yqfk.py requirements.txt entrypoint.sh .
+ADD yqfk.py requirements.txt entrypoint.sh ./
 
 RUN apk --no-cache add python3 \
     && pip3 install --no-cache-dir -r requirements.txt \
