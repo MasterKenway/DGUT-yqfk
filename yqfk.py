@@ -40,7 +40,6 @@ def get_page(message, target):
 
 
 def post_form(message, target):
-    console_msg(target[0])
     yqfk_session = requests.Session()
     yqfk_acesstoken = yqfk_session.get(url=target[0])
     pattern = re.compile(r"access_token=(.*?)$", re.MULTILINE | re.DOTALL)
