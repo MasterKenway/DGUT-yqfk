@@ -1,28 +1,38 @@
-# [DGUT-yqfk](https://github.com/MasterKenway/DGUT-yqfk)
-
-
-
-在脚本的三个参数里面输入对应的值
+## Usage
 
 ```
-username = ""	#学号
-password = ""	#中央认证系统密码
-chat_id = "" 	#telegram用户ID（可选）
-bot_token = ""	#tgbot token
+USERNAME   # 学号
+PASSWORD   # 中央认证系统密码
+SCKEY      # Server 酱密钥
 ```
 
-默认时间在00:10的时候自动提交，可自行修改时间
+[Server 酱密钥获取](http://sc.ftqq.com/)
 
-定时运行使用了`apscheduler`
+默认在 00:10 的时候提交
 
+### 方法一 (docker-compose)
+
+```yaml
+version: "3.1"
+
+services:
+  yqfk:
+    image: masterkenway/dgut_yqfk
+    environment:
+      - USERNAME=
+      - PASSWORD=
+      - SCKEY=
+    restart: always
 ```
-pip install apscheduler
-```
+
+### 方法二 (screen)
 
 可以使用`screen`将程序放置在后台运行
 
-```
-screen -S yqfk
-python3 yqfk.py #Ctrl + A + D 退出当前的screen
+```shell script
+$ git clone https://github.com/MasterKenway/DGUT-yqfk.git && cd DGUT-yqfk 
+$ pip install -r requirements.txt
+$ screen -US yqfk # Ctrl + A + D 离开 screen
+$ python3 yqfk.py USERNAME PASSWORD SCKEY
 ```
 
