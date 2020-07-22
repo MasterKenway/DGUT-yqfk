@@ -6,7 +6,7 @@ WORKDIR /app
 
 ADD yqfk.py requirements.txt entrypoint.sh ./
 
-RUN apk --no-cache add python3 \
+RUN apk --no-cache add python3 py3-pip \
     && pip3 install --no-cache-dir -r requirements.txt \
     && rm requirements.txt \
     && chmod +x entrypoint.sh
