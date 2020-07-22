@@ -10,7 +10,7 @@ import json
 
 username = ""
 password = ""
-sckey = ""  # ServerChan Key
+sckey = None  # ServerChan Key
 
 
 def get_page(message, target):
@@ -121,7 +121,11 @@ if __name__ == '__main__':
         console_msg("不启用 Server 酱")
 
     schedule = BlockingScheduler()
-    schedule.add_job(run, 'cron', hour=0, minute=10)
-    console_msg('任务开始')
-    run()
-    schedule.start()
+    try:
+        schedule.add_job(run, 'cron', hour=0, minute=10)
+        console_msg('任务开始')
+        run()
+        schedule.start()
+    except:
+        console_msg('执行出错', 1)
+        post_message('疫情防控：失败', '脚本执行出错')
