@@ -48,6 +48,8 @@ def post_form(message, target):
     yqfk_session.get(url=yqfk_acesstoken.url)
     yqfk_info = yqfk_session.get('http://yqfk.dgut.edu.cn/home/base_info/getBaseInfo', headers=headers_2).json()
     yqfk_json = yqfk_info['info']
+    yqfk_json['important_area'] = None
+    yqfk_json['current_region'] = None
 
     console_msg(yqfk_info['message'])
     message.append(yqfk_info['message'])
