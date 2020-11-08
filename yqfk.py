@@ -50,6 +50,7 @@ def post_form(message, target):
     yqfk_json = yqfk_info['info']
     yqfk_json['important_area'] = None
     yqfk_json['current_region'] = None
+    yqfk_json['confirm'] = 1
 
     console_msg(yqfk_info['message'])
     message.append(yqfk_info['message'])
