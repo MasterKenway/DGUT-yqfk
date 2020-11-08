@@ -31,7 +31,7 @@ services:
 
 ```shell script
 $ git clone https://github.com/MasterKenway/DGUT-yqfk.git && cd DGUT-yqfk 
-$ pip install -r requirements.txt
+$ pip install -r requirements.txt # 如果运行时报错找不到模块，请确认安装了pip3并将本条命令开头的pip改为pip3
 $ screen -US yqfk # Ctrl + A + D 离开 screen
 $ python3 yqfk.py USERNAME PASSWORD SCKEY
 ```
