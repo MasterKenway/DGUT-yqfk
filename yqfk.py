@@ -57,18 +57,23 @@ def post_form(message, target):
     result = yqfk_session.post(url="http://yqfk.dgut.edu.cn/home/base_info/addBaseInfo", headers=headers_2,
                                json=yqfk_json).json()
 
-    console_msg(result['message'])
-    message.append(result['message'])
-
-    if '已提交' in result['message'] or '成功' in result['message']:
-        console_msg('二次提交，确认成功', 0)
-        result = yqfk_session.post(url="http://yqfk.dgut.edu.cn/home/base_info/addBaseInfo", headers=headers_2,
-                                   json=yqfk_json).json()
+    if 'message' not in result.keys():
+        console_msg('提交失败')
+        message.append('提交失败')
+        return 1
+    else:
         console_msg(result['message'])
         message.append(result['message'])
-        return 0
-    console_msg("二次提交，确认失败", 1)
-    return 1
+
+        if '已提交' in result['message'] or '成功' in result['message']:
+            console_msg('二次提交，确认成功', 0)
+            message.append('二次提交，确认成功')
+            result = yqfk_session.post(url="http://yqfk.dgut.edu.cn/home/base_info/addBaseInfo", headers=headers_2,
+                                       json=yqfk_json).json()
+            console_msg(result['message'])
+            return 0
+        console_msg("二次提交，确认失败", 1)
+        return 1
 
 
 def post_message(text, desp=None):
@@ -125,10 +130,10 @@ if __name__ == '__main__':
 
     schedule = BlockingScheduler()
     try:
-        schedule.add_job(run, 'cron', hour=0, minute=10)
+        schedule.add_job(run, 'cron', hour=5, minute=10)
         console_msg('任务开始')
         run()
         schedule.start()
-    except:
+    except :
         console_msg('执行出错', 1)
         post_message('疫情防控：失败', '脚本执行出错')
