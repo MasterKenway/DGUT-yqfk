@@ -46,7 +46,7 @@ def post_form(message, target):
     access_token = pattern.search(yqfk_acesstoken.url).group(1)
     headers_2 = {'authorization': 'Bearer ' + access_token}
     yqfk_session.get(url=yqfk_acesstoken.url)
-    yqfk_info = yqfk_session.get('http://yqfk.dgut.edu.cn/home/base_info/getBaseInfo', headers=headers_2).json()
+    yqfk_info = yqfk_session.get('https://yqfk.dgut.edu.cn/home/base_info/getBaseInfo', headers=headers_2).json()
     yqfk_json = yqfk_info['info']
     yqfk_json['important_area'] = None
     yqfk_json['current_region'] = None
@@ -54,7 +54,7 @@ def post_form(message, target):
 
     console_msg(yqfk_info['message'])
     message.append(yqfk_info['message'])
-    result = yqfk_session.post(url="http://yqfk.dgut.edu.cn/home/base_info/addBaseInfo", headers=headers_2,
+    result = yqfk_session.post(url="https://yqfk.dgut.edu.cn/home/base_info/addBaseInfo", headers=headers_2,
                                json=yqfk_json).json()
 
     if 'message' not in result.keys():
@@ -68,7 +68,7 @@ def post_form(message, target):
         if '已提交' in result['message'] or '成功' in result['message']:
             console_msg('二次提交，确认成功', 0)
             message.append('二次提交，确认成功')
-            result = yqfk_session.post(url="http://yqfk.dgut.edu.cn/home/base_info/addBaseInfo", headers=headers_2,
+            result = yqfk_session.post(url="https://yqfk.dgut.edu.cn/home/base_info/addBaseInfo", headers=headers_2,
                                        json=yqfk_json).json()
             console_msg(result['message'])
             return 0
