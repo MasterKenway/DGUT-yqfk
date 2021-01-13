@@ -49,7 +49,7 @@ def post_form(message, target):
     yqfk_info = yqfk_session.get('https://yqfk.dgut.edu.cn/home/base_info/getBaseInfo', headers=headers_2).json()
     yqfk_json = yqfk_info['info']
     yqfk_json['important_area'] = None
-    yqfk_json['current_region'] = None
+    # yqfk_json['current_region'] = None
     yqfk_json['confirm'] = 1
 
     console_msg(yqfk_info['message'])
