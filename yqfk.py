@@ -18,7 +18,7 @@ def get_page(message, target):
     session = requests.Session()
     origin = session.get(url=url)
     html = origin.content.decode('utf-8')
-    pattern = re.compile(r"var token = \"(.*?)\";$", re.MULTILINE | re.DOTALL)
+    pattern = re.compile(r"var token = \"(.*?)\";", re.MULTILINE | re.DOTALL)
     token_tmp = pattern.search(html).group(1)
     cookies = {"languageIndex": "0", "last_oauth_appid": "illnessProtectionHome", "last_oauth_state": "home"}
     data = {'username': username, 'password': password, '__token__': token_tmp, 'wechat_verif': ''}
