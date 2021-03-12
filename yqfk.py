@@ -130,10 +130,7 @@ if __name__ == '__main__':
 
     schedule = BlockingScheduler()
     try:
-        schedule.add_job(run, 'cron', hour=5, minute=10)
-        console_msg('任务开始')
         run()
-        schedule.start()
     except :
         console_msg('执行出错', 1)
         post_message('疫情防控：失败', '脚本执行出错')
