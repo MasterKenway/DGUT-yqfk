@@ -51,7 +51,7 @@ def post_form(message, target):
     yqfk_json['important_area'] = None
     # yqfk_json['current_region'] = None
     yqfk_json['confirm'] = 1
-
+    del yqfk_json['acid_test_results']
     console_msg(yqfk_info['message'])
     message.append(yqfk_info['message'])
     result = yqfk_session.post(url="https://yqfk.dgut.edu.cn/home/base_info/addBaseInfo", headers=headers_2,
